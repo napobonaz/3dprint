@@ -1,0 +1,718 @@
+
+
+<script>var base_url ="https://www.3dabax.com/calc";</script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <link rel="shortcut icon" href="https://www.3dabax.com/calc/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="https://www.3dabax.com/calc/favicon.ico" type="image/x-icon">
+
+    <title>Price Calculator</title>
+
+    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <!-- Font Awesome -->
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://www.3dabax.com/calc/libs/jQuery-File-Upload/css/jquery.fileupload.css">
+
+    <link href="https://www.3dabax.com/calc/libs/noUiSlider/nouislider.min.css" rel="stylesheet">
+
+    <link href="https://www.3dabax.com/calc/libs/select2/css/select2.min.css" rel="stylesheet" media="screen" />
+    <link href="https://www.3dabax.com/calc/libs/select2/css/select2-bootstrap.min.css" rel="stylesheet">
+
+    <link href="https://www.3dabax.com/calc/libs/datatables/datatables.min.css" rel="stylesheet" />
+    <link href="https://www.3dabax.com/calc/libs/editor/css/editor.bootstrap.min.css" rel="stylesheet" />
+    <link href="https://www.3dabax.com/calc/libs/bootstrap3-dialog/css/bootstrap-dialog.min.css" rel="stylesheet" />
+
+    <link href="https://www.3dabax.com/calc/libs/jQuery-contextMenu/jquery.contextMenu.min.css" rel="stylesheet" />
+
+    <link href="https://www.3dabax.com/calc/css/viewer.css" rel="stylesheet">
+    <link href="https://www.3dabax.com/calc/css/style.css" rel="stylesheet">
+
+    <link href='https://fonts.googleapis.com/css?family=Cinzel' rel='stylesheet'>
+
+    <script>
+        var my_settings=[], vendor, items =[], materials=[], cart=[],
+            currentitem=null, currentmat=null, currentmachine=null, timer, delay = 300, loadingModel=false;
+
+        vendor = 134;
+        materials = JSON.parse('[{"id":"250","name":"Colorfabb PLA ","description":"High quality PLA","max_size":{"length":"223","width":"223","height":"305"},"mShipdays":"2","wallthickness":null,"minPrice":null,"photourl":"5b9be3549fc02.png","colors":{"755":{"id":"755","name":"Standard Black ","colorcode":"#000000","photo":"uploads\/134\/822908687.png"},"756":{"id":"756","name":"Traffic red","colorcode":"#ff0000","photo":"uploads\/134\/2076095922.png"},"765":{"id":"765","name":"Blue Grey","colorcode":"#70748d","photo":"uploads\/134\/1807497441.png"},"766":{"id":"766","name":"Blueish White","colorcode":"#ffffff","photo":"uploads\/134\/574374157.png"},"767":{"id":"767","name":"Dutch Orange","colorcode":"#ffa936","photo":"uploads\/134\/1300322723.png"},"768":{"id":"768","name":"Intense Green","colorcode":"#43f000","photo":"uploads\/134\/2075507004.png"},"769":{"id":"769","name":"Leaf Green","colorcode":"#49a923","photo":"uploads\/134\/1594462056.png"},"770":{"id":"770","name":"Light Brown","colorcode":"#ba8d44","photo":"uploads\/134\/968876608.png"},"771":{"id":"771","name":"Lila","colorcode":"#aa87cc","photo":"uploads\/134\/615487240.png"},"772":{"id":"772","name":"Magenta","colorcode":"#fc4bff","photo":"uploads\/134\/1265490761.png"},"773":{"id":"773","name":"Mint Turqoiuse","colorcode":"#00ab67","photo":"uploads\/134\/1497253032.png"},"774":{"id":"774","name":"Olive Green","colorcode":"#7c7228","photo":"uploads\/134\/291799867.png"},"775":{"id":"775","name":"Shining Silver","colorcode":"#bfbfbf","photo":"uploads\/134\/463940150.png"},"776":{"id":"776","name":"Signal Yellow","colorcode":"#ffec00","photo":"uploads\/134\/585148188.png"},"777":{"id":"777","name":"Sky Blue","colorcode":"#00c7ff","photo":"uploads\/134\/1516680434.png"},"778":{"id":"778","name":"Ultramarine Blue","colorcode":"#0029ff","photo":"uploads\/134\/719825661.png"}},"extras":[],"machinetype":"1","resolution":"100","express":"0"},{"id":"258","name":"Innofil ABS","description":"Good temperature resistance","max_size":{"length":"223","width":"223","height":"305"},"mShipdays":"2","wallthickness":null,"minPrice":null,"photourl":"5b9be019afed6.png","colors":{"779":{"id":"779","name":"ABS Black","colorcode":"#000000","photo":"uploads\/134\/1750051193.png"},"780":{"id":"780","name":"ABS Blue","colorcode":"#1a00ff","photo":"uploads\/134\/303748984.png"},"781":{"id":"781","name":"ABS Green","colorcode":"#4cce00","photo":"uploads\/134\/1642778403.png"},"782":{"id":"782","name":"ABS Orange","colorcode":"#ff8700","photo":"uploads\/134\/1822607097.png"},"783":{"id":"783","name":"ABS Red","colorcode":"#ff0000","photo":"uploads\/134\/1399201382.png"},"784":{"id":"784","name":"ABS Silver","colorcode":"#d2d0d0","photo":"uploads\/134\/1229496353.png"}},"extras":[],"machinetype":"1","resolution":"100","express":"0"},{"id":"308","name":"Colorfabb PLA","description":"High quality PLA","max_size":{"length":"223","width":"223","height":"305"},"mShipdays":"2","wallthickness":null,"minPrice":null,"photourl":"5bc4cfe00cf27.png","colors":{"851":{"id":"851","name":"Magenta","colorcode":"#ff00f8","photo":"uploads\/134\/1845629133.png"},"852":{"id":"852","name":"Black","colorcode":"#000000","photo":"uploads\/134\/1675149218.png"},"853":{"id":"853","name":"Traffic red","colorcode":"#ff0000","photo":"uploads\/134\/1956259757.png"},"854":{"id":"854","name":"Blue Grey","colorcode":"#646e74","photo":"uploads\/134\/182317346.png"},"855":{"id":"855","name":"Blueish White","colorcode":"#ececec","photo":"uploads\/134\/1064320770.png"},"856":{"id":"856","name":"Dutch Orange","colorcode":"#ffa900","photo":"uploads\/134\/1345679539.png"},"857":{"id":"857","name":"Chocolate brown","colorcode":"#5e2900","photo":"uploads\/134\/1781955457.png"},"858":{"id":"858","name":"Intense Green","colorcode":"#8bff00","photo":"uploads\/134\/579310905.png"},"859":{"id":"859","name":"Leaf Green","colorcode":"#008710","photo":"uploads\/134\/723571401.png"},"860":{"id":"860","name":"Light Brown","colorcode":"#b28223","photo":"uploads\/134\/1602176791.png"},"861":{"id":"861","name":"Lila","colorcode":"#b698c1","photo":"uploads\/134\/1331529365.png"},"862":{"id":"862","name":"Mint Turqoiuse","colorcode":"#00a98b","photo":"uploads\/134\/1174845772.png"},"863":{"id":"863","name":"Olive Green","colorcode":"#597662","photo":"uploads\/134\/1026160235.png"},"864":{"id":"864","name":"Silver","colorcode":"#cecece","photo":"uploads\/134\/2123875344.png"},"865":{"id":"865","name":"Signal Yellow","colorcode":"#f6ee00","photo":"uploads\/134\/629998151.png"},"866":{"id":"866","name":"Sky Blue","colorcode":"#00abe8","photo":"uploads\/134\/306835368.png"},"867":{"id":"867","name":"Ultramarine Blue","colorcode":"#0007e8","photo":"uploads\/134\/636909071.png"}},"extras":[],"machinetype":"1","resolution":"200","express":"0"}]');
+        function initSettings(){
+            my_settings = JSON.parse('{"vat":"19","currency":"\u20ac","fdm_use_resolution":"0","fdm_use_infill":"1","fdm_use_slicing":"0","min_order_price":null,"use_modelinfo":"1","use_cart":"1","material_slider":"1","payments":"0","paypal":"napobona.z@gmail.com","autoprice":"1","body_transparent":"1","body_color":"rgb(255, 255, 255)","panels_header":"rgba(245, 245, 245, 1)","panels_body":"rgba(255, 255, 255, 1)","viewer_transparent":"0","viewer_color":"rgba(137,137,141,1)","copywrite_text":"","banners":"1","maxfilesize":"16000000","material_slider_orientation":"0","quote_monthly_limit":"50"}');
+            my_settings["SUPPORTFILETYPES"] = "stl,obj,zip";
+            my_settings["MAXFILESIZE"]= 16000000;
+        }
+
+        function loadSession(){
+            session=JSON.parse('[]');
+            for (var i=0, len=session.length; i<len; ++i) {
+                items.push(session[i]);
+            }
+
+            session=JSON.parse('[]');
+            for (var i=0, len=session.length; i<len; ++i) {
+                cart.push(session[i]);
+            }
+        }
+
+        initSettings();
+        loadSession();
+
+    </script>
+    <style type="text/css">
+        <!-- BODY { background:none transparent; }-->
+
+        
+                #itemCanvasContainer, .thumb-container{
+            background-image:radial-gradient(ellipse at center, rgba(137,137,141,1) 0%, #404040 100%);
+        }
+        
+        
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div id="itemCanvasContainer">
+
+    <div id="fileDropTarget" class="dropTarget">
+        <span><h1>Drop File</h1></span>
+    </div>
+
+    <canvas id="itemCanvas3d"></canvas>
+
+    <div class="well" id="messagePanel"></div>
+
+    <div class="viewer-icons">
+        <img src="https://www.3dabax.com/calc/images/rottate-left-button.png" >
+        <img src="https://www.3dabax.com/calc/images/zoom-middle-button.png" >
+        <div id="clipping-slider" style="height:80px;margin-top:30px"></div>
+       <!-- <img src="images/pan-right-mouse-button.png" style="margin-left: -4px;"> -->
+    </div>
+
+    <div id="axes" style="display:none"></div>
+
+    <div class="viewer-tools">
+
+        <div class="viewer-toolbar">
+
+            <div class="viewer-toolbar-item">
+                <a href="#" id="wireframeChk" data-toggle="tooltip" title="Wireframe" onclick='viewer.toggleWireframe();return false;' > <img src="https://www.3dabax.com/calc/images/wireframe.png"> </a>
+            </div>
+
+            <div class="viewer-toolbar-item">
+                <a href="#" id="dimensionChk" data-toggle="tooltip" title="Dimensions" onclick='dimensionToggle();return false;' > <img src="https://www.3dabax.com/calc/images/dimension.png"> </a>
+            </div>
+
+            <div class="viewer-toolbar-item">
+                <a href="#" id="axisChk" data-toggle="tooltip" title="Axes" onclick='viewer.showAxis();return false;' > <img src="https://www.3dabax.com/calc/images/axes.png"> </a>
+            </div>
+
+            <div class="viewer-toolbar-items-group">
+
+                <div class="viewer-toolbar-group-item">
+                    <a href="#" id="frontView" data-toggle="tooltip" title="Front View" onclick='viewer.cameraView("front", false);return false;' > <img src="https://www.3dabax.com/calc/images/view_front.png" style="width:22px; height:22px"> </a>
+                </div>
+
+                <div class="viewer-toolbar-group-item">
+                    <a href="#" id="bottomView" data-toggle="tooltip" title="Bottom View" onclick='viewer.cameraView("bottom", false);return false;' > <img src="https://www.3dabax.com/calc/images/view_bottom.png" style="width:22px; height:22px"> </a>
+                </div>
+    
+                <div class="viewer-toolbar-group-item">
+                    <a href="#" id="bottomView" data-toggle="tooltip" title="Top View" onclick='viewer.cameraView("top", false);return false;' > <img src="https://www.3dabax.com/calc/images/view_top.png" style="width:22px; height:22px"> </a>
+                </div>
+
+                <div class="viewer-toolbar-group-item">
+                    <a href="#" id="leftView" data-toggle="tooltip" title="Left View" onclick='viewer.cameraView("left", false);return false;' > <img src="https://www.3dabax.com/calc/images/view_left.png" style="width:22px; height:22px"> </a>
+                </div>
+
+                <div class="viewer-toolbar-group-item">
+                    <a href="#" id="rightView" data-toggle="tooltip" title="Right View" onclick='viewer.cameraView("right", false);return false;' > <img src="https://www.3dabax.com/calc/images/view_right.png" style="width:22px; height:22px"> </a>
+                </div>
+
+                <div class="viewer-toolbar-group-item">
+                    <a href="#" id="backView" data-toggle="tooltip" title="Back View" onclick='viewer.cameraView("back", false);return false;' > <img src="https://www.3dabax.com/calc/images/view_back.png" style="width:22px; height:22px"> </a>
+                </div>
+
+            </div>
+
+            <div class="viewer-toolbar-items-group-right">
+                <div class="viewer-toolbar-item">
+                    <a href="#" id="snapshot" data-toggle="tooltip" title="Take Snapshot" onclick='snapshot();return false;' > <img src="https://www.3dabax.com/calc/images/snapshot.png"> </a>
+                </div>
+                <div class="viewer-toolbar-group-item">
+                    <a href="#" id="fullscreen" data-toggle="tooltip" title="Fullscreen" onclick='viewer.fullScreen();return false;' > <img src="https://www.3dabax.com/calc/images/fullscreen.png"> </a>
+                </div>
+                <div class="viewer-toolbar-group-item" id="floor-btn">
+                    <a href="#" id="floor" data-toggle="tooltip" title="Floor" onclick='floorToggle();return false;' > <img src="https://www.3dabax.com/calc/images/floor.png"> </a>
+                </div>
+                                <div class="viewer-toolbar-group-item">
+                    <a href="#" id="lamp" data-toggle="tooltip" title="Light" onclick='lightToggle();return false;' > <img src="https://www.3dabax.com/calc/images/lightbulb.png" style="padding-bottom:4px"> </a>
+                </div>
+                
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="thumb-container dropTarget"><img id="thumb-img" width="100%"></div>
+
+<script>
+    var background = 'dark';
+
+    function lightToggle(){
+        if (background == 'dark') {
+            $("#itemCanvasContainer").css('background-image', 'radial-gradient(ellipse at center, #ebeff4 0%, #89898d 100%)');
+            background = 'light';
+        }else if (background == 'light'){
+            $("#itemCanvasContainer").css('background-image', 'radial-gradient(ellipse at center, rgba(137,137,141,1) 0%, #404040 100%)');
+            background = 'dark';
+        }
+    }
+
+    function floorToggle(){
+        showFloor = !showFloor;
+        setupFloor();
+    }
+</script>
+
+
+        </div>
+        <div class="col-md-6" id="controls">
+            
+<div class="row">
+    <div class="col-md-10">
+        <div id="fileDropTarget2" class="dropTarget">
+            <span class="btn btn-primary fileinput-button">
+                <i class="fas fa-plus"></i>
+                <span>Upload</span>
+                <input id="fileupload" type="file" name="files[]" multiple>
+            </span>
+            <span><b>Drag &amp; Drop Files (Max 16MB)</b></span>
+            <span class="fas fa-question-circle" data-toggle="tooltip" data-html="true"
+                  title="stl,obj" id="fileuploadertip"
+                  data-placement="right" style="margin-left:5px;">
+            </span>
+            <script>$("#fileuploadertip").tooltip();</script>
+
+            <div id="progress" class="progress" style="margin-top:10px;">
+                <div class="progress-bar progress-bar-success"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-2">
+                <button type="button" class="btn btn-default btn-large cart-btn" style="margin-top:6px;padding: 12px;" onclick="loadDialog('Cart','https://www.3dabax.com/calc/cartmanager.php', 'size-wide')">
+            <span class="fas fa-shopping-cart" aria-hidden="true"></span>
+            <span class="badge" id="cartbadge">0</span>
+        </button>
+            </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default settings-panel">
+            <div class="panel-heading">
+                <span>Settings</span>
+                <button type="button" class="btn btn-primary" id="filesBtn" onclick="loadDialog('File manager','https://www.3dabax.com/calc/filemanager.php', 'size-wide')">
+                    <span class="fas fa-file" aria-hidden="true"></span>
+                    <span id="filesBtn-title">Files Manager</span>
+                    <span class="badge" id="filesbadge">0</span>
+                </button>
+                                <button type="button" class="btn btn-info" id="statsBtn" onclick="loadDialog('<span class=\'fas fa-info-circle\'></span> Model Info','https://www.3dabax.com/calc/filestats.php')">
+                    <span class="fas fa-info-circle"></span>
+                    <span id="filesBtn-title">Info</span>
+                </button>
+                
+                <button type="button" class="btn btn-warning" id="fixBtn" onclick="fixCurrent(currentitem.id)" style="float: right" disabled>
+                    <span class="fas fa-wrench" aria-hidden="true"></span>
+                    <span id="filesBtn-title">Fix</span>
+                </button>
+                <button type="button" class="btn btn-warning" id="undoBtn" onclick="undoFix(currentitem.id)" style="float: right; margin-right:5px; display:none">
+                    <span class="fas fa-undo" aria-hidden="true"></span>
+                    <span id="filesBtn-title">Undo Fix</span>
+                </button>
+            </div>
+            <div class="panel-body">
+                <table class="table print-settings" style="table-layout: fixed !important;" >
+                    <tr id="material-row">
+                        <td style="text-align:right;width:120px;padding-top:12px;"><label for="material-select">Material:</label></td>
+                        <td style="text-align:right;"><select class="selectii form-control" id="material-select" style="width:100%"></select></td>
+                    </tr>
+                    <tr id="color-row">
+                        <td style="text-align:right;padding-top:12px;"><label for="color-select">Color:</label></td>
+                        <td style="text-align:right;"><select class="selectii form-control" id="color-select" style="width:100%"></select></td>
+                    </tr>
+                                                            <tr id="infill-row">
+                        <td style="text-align:right;padding-top:12px;"><label for="infill-select">Infill:</label></td>
+                        <td style="text-align:right;"><select class="selectii form-control" id="infill-select" style="width:100%">
+                                <option value="20" selected>20%</option>
+                                <option value="40">40%</option>
+                                <option value="60">60%</option>
+                                <option value="80">80%</option>
+                                <option value="100">100%</option>
+                            </select></td>
+                    </tr>
+                                        <tr id="extra-row">
+                        <td style="text-align:right;padding-top:12px;"><label for="extra-select">Extra:</label></td>
+                        <td style="text-align:right;"><select class="selectii form-control" id="extra-select" multiple="multiple" style="width:100%"></select></td>
+                    </tr>
+                    <tr class="scale-row">
+                        <td style="text-align:right;padding-top:17px;"><button class="btn btn-xs" title="reset size" onclick="calcScale(1,1)"><i class="fas fa-redo"></i></button><label>Size(mm):</label></td>
+                        <td style="text-align:right;">
+                            <table class="table table-condensed" style="background-color:inherit">
+                                <tbody>
+                                    <tr>
+                                        <td><input type="number" value="" id="length" class="form-control" onchange="calcScale(currentitem.stats.bbox['length'], this.value)" data-toggle="tooltip" title="mm"></td>
+                                        <td><input type="number" value="" id="width" class="form-control" onchange="calcScale(currentitem.stats.bbox['width'], this.value)" data-toggle="tooltip" title="mm"></td>
+                                        <td><input type="number" value="" id="height" class="form-control" onchange="calcScale(currentitem.stats.bbox['height'], this.value)" data-toggle="tooltip" title="mm"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:right;padding-top:12px;" colspan="2"><span>Model units:</span></td>
+                                        <td><select id="metric" class="form-control" onchange="convertToMM();" data-toggle="tooltip" title="convert to mm from">
+                                                <option value="mm" selected>mm</option>
+                                                <option value="inch">inch</option>
+                                                <option value="meter">meter</option>
+                                                <option value="cm">cm</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <input type="hidden" value="" id="scale">
+                            <input type="hidden" value="" id="volume">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" id="price_controls" style="padding-left: 15px; padding-right: 15px;">
+    <div class="panel panel-default price-controls">
+        <div class="panel-body">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="qty">Quantity</label>
+
+                    <div class="input-group">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" data-value="decrease" data-target="#qty" data-toggle="spinner">
+                                        <span class="fas fa-minus"></span>
+                                    </button>
+                                </span>
+                        <input type="text" data-min="1" data-ride="spinner" id="qty" class="form-control input-number" value="1" onchange="updateQty(this.value)">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" data-value="increase" data-target="#qty" data-toggle="spinner">
+                                        <span class="fas fa-plus"></span>
+                                    </button>
+                                </span>
+                    </div>
+                </div>
+            </div>
+                            <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="price">Price</label>
+                        <div class="input-group">
+                            <input id="price" value="0.0" readonly class="form-control">
+                            <div class="input-group-addon">€</div>
+                        </div>
+                        <span class="help-block">Tax is not included</span>
+                    </div>
+                </div>
+                        <div class="col-md-4">
+                                <div style="margin-top:20px">
+                                        <button id="cartBtn" type="button" class="btn btn-success btn-lg btn-block" disabled="disabled" onclick="addToCart(currentitem.id)">Add to cart</button>
+                                    </div>
+                            </div>
+        </div>
+    </div>
+</div>        </div>
+    </div>
+
+    <div class="row" style="margin-top:10px">
+    <div class="panel panel-default material-slider">
+        <div class="panel-heading">Materials </div>
+        <div class="panel-body">
+                        <div class="col-md-2">
+
+                <button id="scroll_up" class="btn" onclick="scrollY(40);" style="width:100%;height:25px;" disabled><i class="fa fa-chevron-up"></i></button>
+                <div id="material-nav-bar" style="height: 300px; overflow-y: hidden;">
+                    <ul class="nav nav-pills nav-stacked materialTabs">
+                                                        <li  class="active">
+                                    <a href="#mat-250" aria-controls="250" role="tab" data-toggle="pill" data-id="250">Colorfabb PLA </a>
+                                </li>
+                                                              <li >
+                                    <a href="#mat-258" aria-controls="258" role="tab" data-toggle="pill" data-id="258">Innofil ABS</a>
+                                </li>
+                                                              <li >
+                                    <a href="#mat-308" aria-controls="308" role="tab" data-toggle="pill" data-id="308">Colorfabb PLA</a>
+                                </li>
+                                                  </ul>
+                </div>
+                <button id="scroll_down" class="btn" onclick="scrollY(-40);" style="width:100%;height:25px"><i class="fa fa-chevron-down"></i></button>
+
+            </div>
+            <div class="col-md-10">
+                <div class="tab-content">
+                                                            <div role="tabpanel" class="tab-pane fade  active in materialPane" id="mat-250">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h4>Material Description</h4>
+                                                                                <div class="material-image">
+                                            <p><img id="materialSamplePhoto" src="https://www.3dabax.com/calc/uploads/134/5b9be3549fc02.png" style="width:100px;height:100px;"></p>
+                                        </div>
+                                                                                <div class="material-info">
+                                            <p><p>Biodegradable plastic with excellent mechanical properties but relatively low temperature resistance (&lt;40&deg;C).</p>
+</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h4>Available Colors</h4>
+                                        <div class="material-avail-colors">
+                                                                                                                                    <div id='color-755' class="colorChoise" data-name='Standard Black ' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/822908687.png">
+                                                </div>
+                                                                                                                                                                                <div id='color-756' class="colorChoise" data-name='Traffic red' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/2076095922.png">
+                                                </div>
+                                                                                                                                                                                <div id='color-765' class="colorChoise" data-name='Blue Grey' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/1807497441.png">
+                                                </div>
+                                                                                                                                                                                <div id='color-766' class="colorChoise" data-name='Blueish White' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/574374157.png">
+                                                </div>
+                                                                                                                                                                                <div id='color-767' class="colorChoise" data-name='Dutch Orange' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/1300322723.png">
+                                                </div>
+                                                                                                                                                                                <div id='color-768' class="colorChoise" data-name='Intense Green' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/2075507004.png">
+                                                </div>
+                                                                                                                                                                                <div id='color-769' class="colorChoise" data-name='Leaf Green' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/1594462056.png">
+                                                </div>
+                                                                                                                                                                                <div id='color-770' class="colorChoise" data-name='Light Brown' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/968876608.png">
+                                                </div>
+                                                                                                                                                                                <div id='color-771' class="colorChoise" data-name='Lila' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/615487240.png">
+                                                </div>
+                                                                                                                                                                                <div id='color-772' class="colorChoise" data-name='Magenta' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/1265490761.png">
+                                                </div>
+                                                                                                                                                                                <div id='color-773' class="colorChoise" data-name='Mint Turqoiuse' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/1497253032.png">
+                                                </div>
+                                                                                                                                                                                <div id='color-774' class="colorChoise" data-name='Olive Green' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/291799867.png">
+                                                </div>
+                                                                                                                                                                                <div id='color-775' class="colorChoise" data-name='Shining Silver' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/463940150.png">
+                                                </div>
+                                                                                                                                                                                <div id='color-776' class="colorChoise" data-name='Signal Yellow' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/585148188.png">
+                                                </div>
+                                                                                                                                                                                <div id='color-777' class="colorChoise" data-name='Sky Blue' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/1516680434.png">
+                                                </div>
+                                                                                                                                                                                <div id='color-778' class="colorChoise" data-name='Ultramarine Blue' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/719825661.png">
+                                                </div>
+                                                                                                                            </div>
+
+                                        <table class="table"><tbody>
+                                            <tr>
+                                                <td>Max. Size:</td>
+                                                <td class="maxSize">223x223x305 mm</td>
+                                            </tr>
+                                                                                        <tr>
+                                                <td>Ship within:</td>
+                                                <td>2 working days</td>
+                                            </tr>
+                                                                                        </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                                                      <div role="tabpanel" class="tab-pane fade  materialPane" id="mat-258">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h4>Material Description</h4>
+                                                                                <div class="material-image">
+                                            <p><img id="materialSamplePhoto" src="https://www.3dabax.com/calc/uploads/134/5b9be019afed6.png" style="width:100px;height:100px;"></p>
+                                        </div>
+                                                                                <div class="material-info">
+                                            <p><p>ABS is strong, yet somewhat felxible. Good temperature resistance.&nbsp;</p>
+</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h4>Available Colors</h4>
+                                        <div class="material-avail-colors">
+                                                                                                                                    <div id='color-779' class="colorChoise" data-name='ABS Black' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/1750051193.png">
+                                                </div>
+                                                                                                                                                                                <div id='color-780' class="colorChoise" data-name='ABS Blue' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/303748984.png">
+                                                </div>
+                                                                                                                                                                                <div id='color-781' class="colorChoise" data-name='ABS Green' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/1642778403.png">
+                                                </div>
+                                                                                                                                                                                <div id='color-782' class="colorChoise" data-name='ABS Orange' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/1822607097.png">
+                                                </div>
+                                                                                                                                                                                <div id='color-783' class="colorChoise" data-name='ABS Red' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/1399201382.png">
+                                                </div>
+                                                                                                                                                                                <div id='color-784' class="colorChoise" data-name='ABS Silver' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/1229496353.png">
+                                                </div>
+                                                                                                                            </div>
+
+                                        <table class="table"><tbody>
+                                            <tr>
+                                                <td>Max. Size:</td>
+                                                <td class="maxSize">223x223x305 mm</td>
+                                            </tr>
+                                                                                        <tr>
+                                                <td>Ship within:</td>
+                                                <td>2 working days</td>
+                                            </tr>
+                                                                                        </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                                                      <div role="tabpanel" class="tab-pane fade  materialPane" id="mat-308">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h4>Material Description</h4>
+                                                                                <div class="material-image">
+                                            <p><img id="materialSamplePhoto" src="https://www.3dabax.com/calc/uploads/134/5bc4cfe00cf27.png" style="width:100px;height:100px;"></p>
+                                        </div>
+                                                                                <div class="material-info">
+                                            <p><p>Biodegradable plastic with excellent mechanical properties but relatively low temperature resistance (&lt;40&deg;C).</p>
+</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h4>Available Colors</h4>
+                                        <div class="material-avail-colors">
+                                                                                                                                    <div id='color-851' class="colorChoise" data-name='Magenta' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/1845629133.png">
+                                                </div>
+                                                                                                                                                                                <div id='color-852' class="colorChoise" data-name='Black' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/1675149218.png">
+                                                </div>
+                                                                                                                                                                                <div id='color-853' class="colorChoise" data-name='Traffic red' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/1956259757.png">
+                                                </div>
+                                                                                                                                                                                <div id='color-854' class="colorChoise" data-name='Blue Grey' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/182317346.png">
+                                                </div>
+                                                                                                                                                                                <div id='color-855' class="colorChoise" data-name='Blueish White' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/1064320770.png">
+                                                </div>
+                                                                                                                                                                                <div id='color-856' class="colorChoise" data-name='Dutch Orange' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/1345679539.png">
+                                                </div>
+                                                                                                                                                                                <div id='color-857' class="colorChoise" data-name='Chocolate brown' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/1781955457.png">
+                                                </div>
+                                                                                                                                                                                <div id='color-858' class="colorChoise" data-name='Intense Green' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/579310905.png">
+                                                </div>
+                                                                                                                                                                                <div id='color-859' class="colorChoise" data-name='Leaf Green' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/723571401.png">
+                                                </div>
+                                                                                                                                                                                <div id='color-860' class="colorChoise" data-name='Light Brown' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/1602176791.png">
+                                                </div>
+                                                                                                                                                                                <div id='color-861' class="colorChoise" data-name='Lila' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/1331529365.png">
+                                                </div>
+                                                                                                                                                                                <div id='color-862' class="colorChoise" data-name='Mint Turqoiuse' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/1174845772.png">
+                                                </div>
+                                                                                                                                                                                <div id='color-863' class="colorChoise" data-name='Olive Green' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/1026160235.png">
+                                                </div>
+                                                                                                                                                                                <div id='color-864' class="colorChoise" data-name='Silver' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/2123875344.png">
+                                                </div>
+                                                                                                                                                                                <div id='color-865' class="colorChoise" data-name='Signal Yellow' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/629998151.png">
+                                                </div>
+                                                                                                                                                                                <div id='color-866' class="colorChoise" data-name='Sky Blue' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/306835368.png">
+                                                </div>
+                                                                                                                                                                                <div id='color-867' class="colorChoise" data-name='Ultramarine Blue' data-texture="">
+                                                    <img src="https://www.3dabax.com/calc/uploads/134/636909071.png">
+                                                </div>
+                                                                                                                            </div>
+
+                                        <table class="table"><tbody>
+                                            <tr>
+                                                <td>Max. Size:</td>
+                                                <td class="maxSize">223x223x305 mm</td>
+                                            </tr>
+                                                                                        <tr>
+                                                <td>Ship within:</td>
+                                                <td>2 working days</td>
+                                            </tr>
+                                                                                        </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                                          </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://www.3dabax.com/calc/libs/slimScroll/jquery.slimscroll.min.js"></script>
+<script src="https://www.3dabax.com/calc/libs/iscroll.js"></script>
+<script>
+    var myScroll;
+    var pos=0;
+
+    $('.nav-pills a').bind('click', function (e){
+        var id = $(this).data("id");
+        $('#material-select').val(id).trigger("change");
+    });
+
+    $('.material-info').slimScroll({
+        position: 'right',
+        railVisible: true,
+        height:'180px',
+        alwaysVisible: false,
+        distance: '1px'
+    });
+
+    function scrollY(val){
+        myScroll.scrollBy(0, val);
+        updatePosition ();
+    }
+
+    function updatePosition () {
+        if (myScroll.y>=0) $("#scroll_up").prop('disabled', true);
+        else $("#scroll_up").prop('disabled', false);
+
+        if (myScroll.y<=myScroll.maxScrollY) $("#scroll_down").prop('disabled', true);
+        else $("#scroll_down").prop('disabled', false);
+    }
+
+    $(function () {
+
+        if ( $( "#material-nav-bar" ).length ) {
+            myScroll = new IScroll('#material-nav-bar', {
+                mouseWheel: true,
+                probeType: 1
+            });
+
+            myScroll.on('scroll', updatePosition);
+            myScroll.on('scrollEnd', updatePosition);
+
+            if (myScroll.maxScrollY == 0) {
+                $("#scroll_up").hide();
+                $("#scroll_down").hide();
+            }
+        }
+    });
+
+</script>
+
+
+
+    <form action="https://www.3dabax.com/calc/order.php" method="post" id="orderForm"></form>
+
+<!-- Footer -->
+<div class="footer">
+    <div class="row">
+        <div class="col-xs-6">
+                            <p>COPYRIGHT © 2019 PLANFAB.EU. ALL RIGHTS RESERVED.</p>
+                    </div>
+        <div class="col-xs-6">
+            <div class="footer-right">
+                <p>Powered by <a href="http://www.3dabax.com">3D ABAX</a>.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.Footer -->
+</div>
+
+<script src="https://www.3dabax.com/calc/libs/jQuery-File-Upload/js/vendor/jquery.ui.widget.js"></script>
+<script src="https://www.3dabax.com/calc/libs/jQuery-File-Upload/js/jquery.fileupload.js"></script>
+    
+<script src="https://www.3dabax.com/calc/libs/noUiSlider/nouislider.min.js"></script>
+<script src="https://www.3dabax.com/calc/libs/jquery.blockUI.min.js"></script>
+<script src="https://www.3dabax.com/calc/libs/bootstrap-spinner.min.js"></script>
+<script src="https://www.3dabax.com/calc/libs/Tween.js"></script>
+<script src="https://www.3dabax.com/calc/libs/select2/js/select2.min.js"></script>
+
+<script src="https://www.3dabax.com/calc/libs/datatables/datatables.min.js" type="text/javascript"></script>
+
+<script src="https://www.3dabax.com/calc/libs/bootstrap3-dialog/js/bootstrap-dialog.min.js" type="text/javascript"></script>
+<script src="https://www.3dabax.com/calc/libs/jQuery-contextMenu/jquery.ui.position.min.js" type="text/javascript"></script>
+<script src="https://www.3dabax.com/calc/libs/jQuery-contextMenu/jquery.contextMenu.min.js" type="text/javascript"></script>
+
+<script src="https://www.3dabax.com/calc/libs/three.js-r102/build/three.min.js"></script>
+<script src="https://www.3dabax.com/calc/libs/three.js-r102/examples/js/loaders/STLLoader.js"></script>
+<script src="https://www.3dabax.com/calc/libs/three.js-r102/examples/js/loaders/OBJLoader.js"></script>
+<script src="https://www.3dabax.com/calc/libs/three.js-r102/examples/js/loaders/MTLLoader.js"></script>
+<script src="https://www.3dabax.com/calc/libs/three.js-r102/examples/js/loaders/PLYLoader.js"></script>
+<script src="https://www.3dabax.com/calc/libs/VRMLLoader.js"></script>
+<script src="https://www.3dabax.com/calc/libs/three.js-r102/examples/js/controls/OrbitControls.js"></script>
+<script src="https://www.3dabax.com/calc/libs/three.js-r102/examples/js/controls/TrackballControls.js"></script>
+<script src="https://www.3dabax.com/calc/libs/three.js-r102/examples/js/controls/TransformControls.js"></script>
+<script src="https://www.3dabax.com/calc/libs/three.js-r102/examples/js/Detector.js"></script>
+
+<!--
+<script src="https://www.3dabax.com/calc/libs/three.js-r92/examples/js/renderers/CanvasRenderer.js"></script>
+<script src="https://www.3dabax.com/calc/libs/three.js-r92/examples/js/renderers/Projector.js"></script>
+<script src="https://www.3dabax.com/calc/libs/three.js-r92/examples/js/ui.js"></script>
+<script src="https://www.3dabax.com/calc/js/viewer/3DView/measurements/MeasurementControls.js"></script>
+<script src="https://www.3dabax.com/calc/js/viewer/3DView/measurements/Measurement.js"></script>
+<script src="https://www.3dabax.com/calc/js/viewer/3DView/measurements/Measurement.Distance.js"></script>
+<script src="https://www.3dabax.com/calc/js/viewer/3DView/measurements/Measurement.Thickness.js"></script>
+<script src="https://www.3dabax.com/calc/js/viewer/3DView/measurements/Measurement.Angle.js"></script>
+<script src="https://www.3dabax.com/calc/js/viewer/3DView/measurements/Measurement.Radius.js"></script>
+<script src="https://www.3dabax.com/calc/js/viewer/3DView/measurements/Measurement.Info.js"></script>
+<script src="https://www.3dabax.com/calc/js/viewer/3DView/3DView.Measurements.js"></script>
+-->
+
+<!--
+<script src="https://www.3dabax.com/calc/js/viewer/viewer.js"></script>
+<script src="https://www.3dabax.com/calc/js/viewer/loader.js"></script>
+<script src="https://www.3dabax.com/calc/js/viewer/initViewer.js"></script>
+<script src="https://www.3dabax.com/calc/js/printability.js"></script>
+-->
+
+<script src="https://www.3dabax.com/calc/js/viewer/viewer.min.js"></script>
+<script src="https://www.3dabax.com/calc/js/viewer/loader.min.js"></script>
+<script src="https://www.3dabax.com/calc/js/viewer/initViewer.min.js"></script>
+<script src="https://www.3dabax.com/calc/js/printability.min.js"></script>
+
+
+<script src="https://www.3dabax.com/calc/js/upload.js"></script>
+<script src="https://www.3dabax.com/calc/js/helper.js"></script>
+<script src="https://www.3dabax.com/calc/js/main.js"></script>
+
+</body>
+</html>
